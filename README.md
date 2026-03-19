@@ -12,6 +12,7 @@
 - [Motivation](#motivation)
 - [Methods](#methods)
   - [Base Model](#base-model)
+  - [Parameter-Efficient Adaptation Background](#parameter-efficient-adaptation-background)
   - [SFT + LoRA](#sft--lora)
   - [GRPO + LoRA](#grpo--lora)
 - [Evaluation Design](#evaluation-design)
@@ -77,9 +78,51 @@ This project focuses on a lightweight and reproducible comparison of parameter-e
 
 - `Qwen/Qwen2.5-Math-1.5B`
 
+### Parameter-Efficient Adaptation Background
+
+This project mainly implements **LoRA**, while also positioning **LoRA-XS** and **TinyLoRA** as related methods inspired by *Learning to Reason in 13 Parameters*.
+
+## LoRA
+
+LoRA (**Low-Rank Adaptation**) keeps the original model weights frozen and learns a low-rank update:
+
+$$
+W' = W + AB
+$$
+
+where $W$ is the frozen base weight, and $A$ and $B$ are trainable low-rank matrices.
+
+Intuitively, LoRA adapts the model by learning a small correction to the original weights instead of updating the full parameter matrix. This makes post-training much cheaper than full fine-tuning, while still allowing meaningful adaptation.
+
+## LoRA-XS
+
+LoRA-XS further reduces the number of trainable parameters by using fixed truncated SVD factors from the base weight matrix:
+
+$$
+W' = W + U \Sigma R V^\top
+$$
+
+where $U$, $\Sigma$, and $V$ come from the truncated SVD of $W$, and only the small matrix $R$ is trainable.
+
+Compared with standard LoRA, LoRA-XS reduces the trainable parameter count more aggressively by learning only how to recombine dominant singular directions already present in the base model.
+
+## TinyLoRA
+
+TinyLoRA pushes the compression idea further by replacing the trainable core matrix in LoRA-XS with a tiny projected trainable vector:
+
+$$
+W' = W + U \Sigma \left(\sum_{i=1}^{u} v_i P_i\right) V^\top
+$$
+
+where $P_i$ are fixed random matrices and $v \in \mathbb{R}^u$ is the only trainable vector.
+
 ### SFT + LoRA
 
 Supervised fine-tuning (SFT) is used to adapt the model on math-style supervision while keeping the base model frozen and only training LoRA adapter weights.
+
+Pipeline:
+
+`prompt → LoRA-augmented model → predicted answer → compare to gold answer → compute supervised loss → update only LoRA parameters`
 
 Ranks explored:
 
@@ -92,6 +135,10 @@ Ranks explored:
 GRPO is used as a reinforcement-style post-training method with LoRA adapters.
 
 This branch explores whether reward-based training can produce competitive reasoning improvements under a very small trainable budget.
+
+Pipeline:
+
+`prompt → model generates a group of answers → reward and rank them → GRPO loss → update LoRA only`
 
 Rank explored:
 
