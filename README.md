@@ -335,10 +335,11 @@ The notebook saves summary tables such as:
 
 ## References
 
-- **Qwen/Qwen2.5-Math-1.5B**
-- **LoRA: Low-Rank Adaptation of Large Language Models**
-- **GRPO / reinforcement-style post-training methods**
-- **Learning to Reason in 13 Parameters**
+1. Morris, J. X., Mireshghallah, N., Ibrahim, M., & Mahloujifar, S. (2026). *Learning to Reason in 13 Parameters*. ArXiv. https://arxiv.org/abs/2602.04118
+
+2. Biderman, D., Portes, J., Gonzalez Ortiz, J. J., Paul, M., Greengard, P., Jennings, C., King, D., Havens, S., Chiley, V., Frankle, J., Blakeney, C., & Cunningham, J. P. (2024). *LoRA Learns Less and Forgets Less*. ArXiv. https://arxiv.org/abs/2405.09673
+
+3. Bałazy, K., Banaei, M., Aberer, K., & Tabor, J. (2025). *LoRA-XS: Low-Rank Adaptation with Extremely Small Number of Parameters*. ArXiv. https://arxiv.org/abs/2405.17604
 
 ---
 
