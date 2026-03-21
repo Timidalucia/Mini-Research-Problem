@@ -21,6 +21,7 @@
 - [Visual Analysis](#visual-analysis)
 - [Key Findings](#key-findings)
 - [Limitations](#limitations)
+- [Demo Video](#demo-video)
 - [Future Work](#future-work)
 - [Reproducibility Notes](#reproducibility-notes)
 - [How to Run](#how-to-run)
@@ -307,6 +308,14 @@ Finally, a more rigorous study should include:
 - future comparison with **LoRA-XS** and **TinyLoRA** under the same protocol
 
 So the current conclusion is best understood as an **early exploratory result**: in this local setup, **SFT + LoRA appears stronger in raw accuracy**, while **GRPO + LoRA remains interesting for its much smaller trainable parameter budget**. A more controlled and larger-scale test would be needed to make the comparison more definitive.
+
+---
+
+## Demo Video
+
+A pre-recorded demonstration of the built system is available here:
+
+- **YouTube Demo:** https://www.youtube.com/watch?v=1Y2c67uLCPs&t=4s
 
 ---
 
