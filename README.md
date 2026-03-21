@@ -20,6 +20,7 @@
 - [Main Notebook](#main-notebook)
 - [Visual Analysis](#visual-analysis)
 - [Key Findings](#key-findings)
+- [Limitations](#limitations)
 - [Future Work](#future-work)
 - [Reproducibility Notes](#reproducibility-notes)
 - [How to Run](#how-to-run)
@@ -281,6 +282,31 @@ The final notebook results show that **SFT + LoRA** consistently outperformed **
 ### Final Takeaway
 
 In this local notebook workflow, **SFT + LoRA provided the best accuracy-efficiency tradeoff overall**, while **GRPO + LoRA demonstrated an interesting low-parameter direction but did not yet surpass SFT in raw reasoning performance**.
+
+---
+
+## Limitations
+
+This study should be interpreted as a compact local-environment experiment rather than a definitive benchmark of post-training methods.
+
+First, all experiments were run in a **local setup**, which means the results are useful for comparing behavior within this project, but they are not yet strong enough to claim a general conclusion about SFT + LoRA versus GRPO + LoRA at larger scale.
+
+Second, the **GRPO + LoRA branch was trained on CPU**, while the overall project was constrained by practical local compute limits. This matters because CPU training is much slower and may affect optimization efficiency, experiment breadth, and how many hyperparameter settings can realistically be explored. So while the evaluation protocol was kept consistent, the overall comparison is not perfectly matched in training environment and tuning budget.
+
+Third, this project evaluates only a **small set of configurations**:
+- SFT + LoRA at `r = 8, 4, 2`
+- GRPO + LoRA at `r = 2`
+
+This means the comparison is informative, but still narrow. A broader sweep over ranks, reward settings, learning rates, training steps, and decoding settings would make the conclusions stronger.
+
+Finally, a more rigorous study should include:
+- a more tightly matched hardware setting across methods
+- repeated training runs with different random seeds
+- larger held-out evaluation sets
+- stronger ablations on prompt design, extraction rules, and hyperparameters
+- future comparison with **LoRA-XS** and **TinyLoRA** under the same protocol
+
+So the current conclusion is best understood as an **early exploratory result**: in this local setup, **SFT + LoRA appears stronger in raw accuracy**, while **GRPO + LoRA remains interesting for its much smaller trainable parameter budget**. A more controlled and larger-scale test would be needed to make the comparison more definitive.
 
 ---
 
