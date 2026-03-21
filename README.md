@@ -21,7 +21,7 @@
 - [Visual Analysis](#visual-analysis)
 - [Key Findings](#key-findings)
 - [Limitations](#limitations)
-- [Demo Video](#demo-video)
+- [Demonstration Video](#Demonstration-video)
 - [Future Work](#future-work)
 - [Reproducibility Notes](#reproducibility-notes)
 - [How to Run](#how-to-run)
@@ -311,7 +311,7 @@ So the current conclusion is best understood as an **early exploratory result**:
 
 ---
 
-## Demo Video
+## Demonstration Video
 
 A pre-recorded demonstration of the built system is available here:
 
