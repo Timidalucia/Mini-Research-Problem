@@ -152,7 +152,7 @@ The project evaluates each method on three held-out benchmark groups:
 
 - **Reasoning-100**
 - **Olympiad-100**
-- **AIMO-100**
+- **AIMO-150**
 
 Each example is evaluated with a **shared protocol**:
 
@@ -191,8 +191,8 @@ Each example is evaluated with a **shared protocol**:
 │   └── checkpoint-120/
 ├── data/
 │   ├── benchmark_100.jsonl
-│   ├── olympiad_100.jsonl
-│   └── aimo_100.jsonl
+│   ├── olympiad_100_b.jsonl
+│   └── aimo_150.jsonl
 ├── mrp_outputs/
 └── results_tables/
 ```
@@ -227,7 +227,7 @@ The notebook includes a consolidated visualization section with plots such as:
 - parameter efficiency plots
 - heatmaps of benchmark performance
 - SFT rank sweep analysis
-- direct comparison of **SFT r=2 vs GRPO r=2**
+- direct comparison of **Base vs SFT + LoRA r=2 vs GRPO + LoRA r=2**
 
 These visuals are used to compare both **performance** and **efficiency**, not just raw accuracy.
 
@@ -235,22 +235,52 @@ These visuals are used to compare both **performance** and **efficiency**, not j
 
 ## Key Findings
 
-> Fill in this section after running the final notebook.
+The final notebook results show that **SFT + LoRA** consistently outperformed **GRPO + LoRA** in this local setup, although the best LoRA rank varied by benchmark.
 
-### Example result summary template
+### Result Summary
 
-- **Best overall method:** `TODO`
-- **Best benchmark on Reasoning-100:** `TODO`
-- **Best benchmark on Olympiad-100:** `TODO`
-- **Best benchmark on AIMO-100:** `TODO`
-- **Most parameter-efficient method:** `TODO`
-- **Most time-efficient method:** `TODO`
+- **Best overall method:** **SFT + LoRA**
+- **Best benchmark on Reasoning-100:** **SFT LoRA r=2** with **0.88** accuracy
+- **Best benchmark on Olympiad-100:** **SFT LoRA r=2** and **SFT LoRA r=4** tied at **0.59** accuracy
+- **Best benchmark on AIMO-150:** **SFT LoRA r=4** with **0.7333** accuracy
+- **Most parameter-efficient method by accuracy gain per 1M trainable parameters:** **GRPO LoRA r=2 on Olympiad-100** with **0.0367**, but its raw accuracy remained below the best SFT models
+- **Most time-efficient training path:** **SFT + LoRA r=8** had the shortest training time among trained models (**439.34 sec**), while **GRPO + LoRA r=2** was much slower (**30838.75 sec**)
 
-### Example interpretation template
+### Detailed Benchmark Results
 
-- SFT with larger LoRA rank may improve raw benchmark performance, but also increases trainable parameter count.
-- GRPO + LoRA may offer a different tradeoff between parameter efficiency and raw accuracy.
-- Very small adapters remain interesting for future study because they test how far reasoning adaptation can go under tight parameter budgets.
+#### Reasoning-100
+- **Base:** 0.86
+- **SFT LoRA r=8:** 0.87
+- **SFT LoRA r=4:** 0.87
+- **SFT LoRA r=2:** **0.88**
+- **GRPO LoRA r=2:** 0.86
+
+#### Olympiad-100
+- **Base:** 0.57
+- **SFT LoRA r=8:** 0.58
+- **SFT LoRA r=4:** **0.59**
+- **SFT LoRA r=2:** **0.59**
+- **GRPO LoRA r=2:** 0.58
+
+#### AIMO-150
+- **Base:** 0.7067
+- **SFT LoRA r=8:** 0.7267
+- **SFT LoRA r=4:** **0.7333**
+- **SFT LoRA r=2:** 0.7267
+- **GRPO LoRA r=2:** 0.7067
+
+### Interpretation
+
+- **SFT + LoRA was the stronger overall approach** in this experiment, improving over the base model on all three benchmark groups.
+- **LoRA rank 2 was the strongest setting on Reasoning-100** and tied for best on Olympiad-100, suggesting that smaller adapters can still be effective.
+- **LoRA rank 4 was the strongest setting on AIMO-150**, indicating that the best rank may depend on benchmark difficulty and distribution.
+- **GRPO + LoRA used far fewer trainable parameters** (**272,384**) than the SFT adapters, but in this run it produced only a small gain on Olympiad-100 and no gain on Reasoning-100 or AIMO-150.
+- **GRPO showed strong parameter-efficiency on paper**, especially on Olympiad-100, but this came with much lower practical training efficiency because the run took substantially longer than all SFT settings.
+- **All evaluated methods had perfect consistency across 3 runs** under the shared deterministic evaluation setup.
+
+### Final Takeaway
+
+In this local notebook workflow, **SFT + LoRA provided the best accuracy-efficiency tradeoff overall**, while **GRPO + LoRA demonstrated an interesting low-parameter direction but did not yet surpass SFT in raw reasoning performance**.
 
 ---
 
@@ -315,8 +345,8 @@ Required resources include:
 Expected benchmark files include:
 
 - `data/benchmark_100.jsonl`
-- `data/olympiad_100.jsonl`
-- `data/aimo_100.jsonl`
+- `data/olympiad_100_b.jsonl`
+- `data/aimo_150.jsonl`
 
 ### 4. Run the integrated notebook
 
