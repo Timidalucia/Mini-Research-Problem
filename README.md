@@ -405,6 +405,8 @@ The notebook saves summary tables such as:
 2. Biderman, D., Portes, J., Gonzalez Ortiz, J. J., Paul, M., Greengard, P., Jennings, C., King, D., Havens, S., Chiley, V., Frankle, J., Blakeney, C., & Cunningham, J. P. (2024). *LoRA Learns Less and Forgets Less*. ArXiv. https://arxiv.org/abs/2405.09673
 
 3. Bałazy, K., Banaei, M., Aberer, K., & Tabor, J. (2025). *LoRA-XS: Low-Rank Adaptation with Extremely Small Number of Parameters*. ArXiv. https://arxiv.org/abs/2405.17604
+  
+4. Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu Chen. Lora: Low-rank adaptation of large language models, 2021. URL https://arxiv.org/abs/2106.09685.
 
 ---
 
